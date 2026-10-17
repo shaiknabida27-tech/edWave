@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>EduWave – Learn Today. Grow Tomorrow.</title>
+<style>
+:root{
+  --bg:#F5F1FD; --surface:#FFFFFF; --ink:#25163F; --muted:#5E5280; --line:#DCD2F1;
+  --brand:#6A3FD1; --brand-ink:#FFFFFF; --pencil:#FFC93C; --pencil-ink:#3A2B00;
+  --good:#1E8E5A; --bad:#C73E3E; --tint:#ECE6FA; --deep:#2A1466;
+  color-scheme:light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+html{height:100%;scroll-padding-top:70px}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);min-height:100%;
+  font:17px/1.55 "Segoe UI",system-ui,-apple-system,Roboto,"Helvetica Neue",Arial,sans-serif;-webkit-text-size-adjust:100%}
+h1,h2,h3{font-family:Rockwell,"Roboto Slab","Zilla Slab",Georgia,serif;line-height:1.15;margin:0}
+h2{font-size:clamp(1.55rem,5.5vw,2.1rem);font-weight:800}
+h3{font-size:1.12rem;font-weight:700}
+p{margin:0}
+a{color:var(--brand)}
+button{font:inherit;color:inherit;cursor:pointer;touch-action:manipulation}
+input,textarea{font:inherit}
+:focus-visible{outline:3px solid var(--pencil);outline-offset:2px;border-radius:6px}
+[hidden]{display:none!important}
+.wrap{max-width:760px;margin:0 auto;padding:0 18px}
+.page{display:none}
+.page.active{display:block}
+.page:focus{outline:none}
+.sub{color:var(--muted);margin:8px 0 20px;max-width:36em}
+.btn{border:0;background:var(--brand);color:var(--brand-ink);font-weight:700;padding:12px 20px;border-radius:10px;font-size:1.05rem}
+.btn.alt{background:var(--pencil);color:var(--pencil-ink)}
+.btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--line)}
+.btn.big{width:100%;padding:15px 20px;font-size:1.12rem}
+.btn:disabled{opacity:.5;cursor:default}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips button{border:1.5px solid var(--line);background:var(--surface);padding:8px 15px;border-radius:999px;font-weight:600;font-size:.95rem}
+.chips button[aria-pressed="true"]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.seg{display:inline-flex;gap:4px;background:var(--tint);padding:4px;border-radius:10px;flex-wrap:wrap}
+.seg button{border:0;background:transparent;padding:7px 12px;border-radius:7px;font-weight:600;font-size:.92rem;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--brand);color:var(--brand-ink)}
+.tip{margin-top:16px;padding:12px 14px;border-left:4px solid var(--pencil);background:var(--surface);color:var(--muted);font-size:.95rem}
+.tag{font-size:.8rem;font-weight:700;background:var(--tint);color:var(--brand);padding:3px 9px;border-radius:99px;white-space:nowrap}
+
+/* ===== HOME ===== */
+.hero2{position:relative;background:linear-gradient(180deg,#F1EBFF 0%,#E2D7FF 60%,#D2C2FA 100%);color:var(--ink);min-height:100vh;min-height:100svh;display:flex;flex-direction:column;overflow:hidden;margin-top:calc(-1 * env(safe-area-inset-top,0px));padding-top:env(safe-area-inset-top,0px)}
+.hero2 .wrap{max-width:1000px}
+.hero-in{position:relative;z-index:2;flex:1;display:grid;gap:8px;align-content:center;padding-bottom:150px}
+.hero-art{margin-top:22px}
+.hero-art svg{overflow:hidden;border-radius:26px;box-shadow:6px 6px 0 #FFC93C;display:block;width:100%;height:auto;max-width:460px;margin:0 auto}
+.fl{animation:bob 5s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes bob{50%{transform:translateY(-9px)}}
+@media (min-width:820px){
+  .hero-in{grid-template-columns:1.05fr .95fr;gap:30px;align-items:center}
+  .hero-art svg{max-width:520px}
+}
+.feat{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px}
+@media (min-width:820px){.feat{grid-template-columns:repeat(4,1fr)}}
+.tile{border-radius:18px;padding:16px 14px 18px;color:#25163F}
+.tile svg{width:46px;height:46px;display:block;margin-bottom:10px}
+.tile h3{font-size:1.05rem;margin-bottom:4px}
+.tile p{font-size:.9rem;line-height:1.4;opacity:.85}
+.t1{background:#E3D8FF}.t2{background:#FFE8A3}.t3{background:#C8F1E6}.t4{background:#FFD3C6}
+.band{background:linear-gradient(135deg,#3A1C8A,#6A3FD1);color:#fff;border-radius:22px;padding:28px 22px;margin:34px 0 10px}
+.band h2{color:#fff}
+.band p{margin:8px 0 18px;color:#E6DCFF}
+.logo{font-family:Rockwell,"Roboto Slab",Georgia,serif;font-weight:800;font-size:1.5rem;display:flex;align-items:center;gap:10px;margin-bottom:clamp(30px,9vh,70px)}
+.logo svg{width:34px;height:34px}
+.hero2 h1{color:#2A1466;font-family:Rockwell,"Roboto Slab","Zilla Slab",Georgia,serif;font-size:clamp(2.6rem,12vw,5rem);font-weight:800;line-height:1.02;letter-spacing:-.015em;margin:0}
+.hero2 .tagline{font-size:clamp(1.1rem,4vw,1.4rem);color:var(--muted);margin:18px 0 30px;max-width:22em}
+.cta{display:inline-block;background:var(--pencil);color:var(--pencil-ink);font-weight:800;font-size:1.2rem;padding:16px 34px;border-radius:14px;text-decoration:none;box-shadow:5px 5px 0 rgba(42,20,102,.25)}
+.cta:active{transform:translate(2px,2px);box-shadow:3px 3px 0 rgba(42,20,102,.25)}
+.cta2{display:block;margin-top:16px;color:var(--brand);font-weight:600}
+.cta-row{display:flex;flex-direction:column;align-items:flex-start}
+.waves{position:absolute;left:0;right:0;bottom:0;height:140px;pointer-events:none}
+.waves svg{position:absolute;left:0;bottom:0;width:200%;height:100%}
+.w1{fill:#B9A2F5;opacity:.6;animation:drift 16s linear infinite}
+.w2{fill:var(--bg);height:70%!important;animation:drift 10s linear infinite reverse}
+@keyframes drift{to{transform:translateX(-50%)}}
+.how{padding:40px 0 20px}
+.how ol{list-style:none;counter-reset:s;margin:22px 0 0;padding:0;display:grid;gap:16px}
+.how li{counter-increment:s;display:flex;gap:14px;align-items:flex-start}
+.how li::before{content:counter(s);flex:none;width:34px;height:34px;border-radius:50%;background:var(--brand);color:var(--brand-ink);font-weight:800;display:grid;place-items:center}
+.how li b{display:block}
+.how li span{color:var(--muted)}
+footer.foot{padding:30px 0 40px;color:var(--muted);font-size:.95rem}
+
+/* ===== SETUP ===== */
+.narrow{max-width:560px}
+#setup .wrap{padding-top:22px;padding-bottom:50px}
+.back{display:inline-block;margin-bottom:14px;font-weight:600;text-decoration:none}
+.stepline{font-weight:700;color:var(--muted);margin-bottom:6px}
+.field{margin:20px 0 6px}
+.lbl{font-weight:700;margin:20px 0 8px}
+#nameIn{width:100%;font-size:1.2rem;padding:13px 14px;border:2px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink)}
+#nameIn:focus{border-color:var(--brand)}
+.err{color:var(--bad);font-weight:600;min-height:1.4em;margin:14px 0 8px}
+.rowbtn{display:flex;gap:10px}
+.rowbtn .btn{flex:1}
+
+/* ===== APP CHROME ===== */
+#apphead{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+#apphead .wrap{display:flex;align-items:center;justify-content:space-between;height:54px}
+.hbrand{font-family:Rockwell,"Roboto Slab",Georgia,serif;font-weight:800;font-size:1.2rem;color:var(--ink);text-decoration:none;display:flex;align-items:center;gap:8px}
+.hbrand svg{width:24px;height:24px}
+.chip{background:var(--tint);color:var(--brand);font-weight:700;font-size:.88rem;padding:5px 12px;border-radius:999px}
+#tabbar{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--surface);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px)}
+#tabbar div{max-width:760px;margin:0 auto;display:grid;grid-template-columns:repeat(6,1fr)}
+#tabbar a{padding:11px 2px;text-align:center;text-decoration:none;color:var(--muted);font-weight:700;font-size:.8rem;border-top:3px solid transparent}
+#tabbar a[aria-current="page"]{color:var(--brand);border-top-color:var(--brand)}
+.inner{padding:26px 0 90px}
+
+/* ===== DASHBOARD ===== */
+.hello{font-family:Rockwell,"Roboto Slab",Georgia,serif;font-size:clamp(1.9rem,7vw,2.6rem);font-weight:800}
+.meta{color:var(--muted);margin-top:4px}
+.panel{background:var(--surface);border:2px solid var(--ink);border-radius:14px;padding:16px;box-shadow:5px 5px 0 var(--pencil);margin-top:20px}
+.panel .top{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.xpbar{height:10px;background:var(--tint);border-radius:99px;overflow:hidden;margin:10px 0 12px}
+.xpbar b{display:block;height:100%;background:var(--brand);border-radius:99px}
+.mini{display:flex;gap:18px;flex-wrap:wrap;color:var(--muted);font-size:.95rem}
+.mini b{color:var(--ink)}
+.play{display:flex;justify-content:space-between;align-items:center;gap:14px;background:var(--brand);color:var(--brand-ink);border-radius:14px;padding:18px;margin-top:20px}
+.play h3{font-size:1.25rem}
+.play p{opacity:.9;font-size:.95rem}
+.play .btn{background:var(--pencil);color:var(--pencil-ink);flex:none}
+.sect{margin-top:30px}
+.sect>h3{margin-bottom:6px}
+.rows{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.rows li{border-bottom:1px solid var(--line)}
+.rows a{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:14px 4px;text-decoration:none;color:var(--ink)}
+.rows a:hover{background:var(--tint)}
+.rows strong{display:block}
+.rows .d{color:var(--muted);font-size:.93rem}
+.rows .go{color:var(--brand);font-weight:700;white-space:nowrap}
+.linkbtn{background:none;border:0;color:var(--brand);font-weight:600;text-decoration:underline;padding:0;margin-top:26px}
+
+/* ===== MATH ARENA ===== */
+.arena-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.road{position:relative;margin:6px 0 0;padding-left:0;list-style:none}
+.road::before{content:"";position:absolute;left:24px;top:20px;bottom:20px;border-left:3px dashed var(--line)}
+.node{position:relative;display:flex;gap:14px;align-items:center;padding:10px 0}
+.dot{flex:none;width:50px;height:50px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:1.15rem;background:var(--brand);color:var(--brand-ink);border:3px solid var(--bg);z-index:1}
+.node.locked .dot{background:var(--tint);color:var(--muted)}
+.node.done .dot{background:var(--good);color:#fff}
+.nbody{flex:1;min-width:0}
+.nbody b{display:block}
+.nbody span{color:var(--muted);font-size:.92rem}
+.stars{letter-spacing:2px;color:#E0A100;font-size:1.1rem}
+.node.locked .stars{color:var(--line)}
+.node .btn{padding:9px 16px;font-size:.95rem;flex:none}
+.badges{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(210px,1fr))}
+.badge{border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;background:var(--surface)}
+.badge.off{opacity:.55}
+.badge b{display:block}
+.badge span{color:var(--muted);font-size:.9rem}
+.tricks{display:grid;gap:22px}
+.trick h3{margin-bottom:6px}
+.trick p{color:var(--muted)}
+.trick code{background:var(--tint);color:var(--ink);padding:2px 7px;border-radius:5px;font-size:.95em}
+
+.game{background:var(--surface);border:2px solid var(--ink);border-radius:14px;padding:14px;box-shadow:5px 5px 0 var(--pencil)}
+.hud{display:flex;justify-content:space-between;align-items:center;font-weight:800;gap:10px}
+.hud .hearts{color:var(--bad);letter-spacing:3px;font-size:1.3rem}
+.hud .tm{font-variant-numeric:tabular-nums}
+.bar{height:8px;background:var(--tint);border-radius:99px;overflow:hidden;margin:8px 0}
+.bar b{display:block;height:100%;width:100%;background:var(--pencil);transform-origin:left;transition:transform .25s linear}
+.combo{text-align:center;font-weight:800;color:var(--brand);min-height:1.5em;position:relative}
+.floatpts{position:absolute;left:50%;top:-4px;font-weight:800;color:var(--good);animation:floatup .8s ease-out forwards;pointer-events:none}
+@keyframes floatup{from{opacity:1;transform:translate(-50%,0)}to{opacity:0;transform:translate(-50%,-34px)}}
+.qbox{text-align:center;padding:10px 0 2px}
+.qbox .q{font-family:Rockwell,"Roboto Slab",Georgia,serif;font-size:clamp(2.6rem,14vw,4rem);font-weight:800;font-variant-numeric:tabular-nums}
+.qbox .q.shake{animation:shake .35s}
+@keyframes shake{20%{transform:translateX(-9px)}40%{transform:translateX(9px)}60%{transform:translateX(-6px)}80%{transform:translateX(6px)}}
+.ansbox{margin:6px auto 4px;min-width:140px;max-width:240px;font-size:2rem;font-weight:800;text-align:center;border-bottom:3px solid var(--brand);padding:2px 0;min-height:1.4em;font-variant-numeric:tabular-nums}
+.ansbox.ok{border-color:var(--good);color:var(--good)} .ansbox.no{border-color:var(--bad);color:var(--bad)}
+.gfb{text-align:center;min-height:1.5em;font-weight:700;color:var(--muted);margin-bottom:8px}
+.pad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:340px;margin:0 auto}
+.pad button{border:0;background:var(--tint);border-radius:12px;padding:13px 0;font-size:1.5rem;font-weight:800}
+.pad button:active{background:var(--brand);color:var(--brand-ink)}
+.pad .go{background:var(--brand);color:var(--brand-ink)}
+.quit{margin-top:12px;text-align:center}
+.result{background:var(--surface);border:2px solid var(--ink);border-radius:14px;padding:22px 16px;box-shadow:5px 5px 0 var(--pencil);text-align:center}
+.result .st{font-size:2.6rem;color:#E0A100;letter-spacing:6px}
+.result .big{font-family:Rockwell,Georgia,serif;font-size:2.4rem;font-weight:800}
+.result ul{list-style:none;padding:0;margin:14px 0;color:var(--muted)}
+.result li b{color:var(--ink)}
+.result .newb{color:var(--brand);font-weight:700}
+.result .rowbtn{margin-top:16px;flex-wrap:wrap}
+
+/* ===== LIBRARY / GUIDANCE ===== */
+.res{list-style:none;margin:14px 0 0;padding:0;border-top:1px solid var(--line)}
+.res li{border-bottom:1px solid var(--line)}
+.res a{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:14px 4px;text-decoration:none;color:var(--ink)}
+.res a:hover{background:var(--tint)}
+.res strong{display:block}
+.res .d{color:var(--muted);font-size:.93rem;display:block}
+.res .why{color:var(--brand);font-size:.85rem;font-weight:600;display:block}
+.paths{display:grid;gap:10px;margin-top:14px}
+.path{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.path.match{border:2px solid var(--brand)}
+.path h3{margin-bottom:4px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.path p{color:var(--muted);font-size:.96rem}
+.path p b{color:var(--ink)}
+
+/* ===== SPEAK ===== */
+.today{background:var(--brand);color:var(--brand-ink);border-radius:14px;padding:20px;margin-bottom:22px}
+.today small{display:block;font-weight:700;opacity:.85;margin-bottom:6px}
+.today .en{font-family:Rockwell,"Roboto Slab",Georgia,serif;font-size:1.5rem;font-weight:800;line-height:1.25}
+.today .use{margin-top:8px;opacity:.9;font-size:.95rem}
+.today .btn{margin-top:14px;background:var(--pencil);color:var(--pencil-ink)}
+.group h3{margin:22px 0 6px}
+.ph{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.ph button{flex:none;border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 14px;font-weight:600;font-size:.9rem}
+
+/* ===== TUTOR ===== */
+.tutor{background:var(--surface);border:2px solid var(--ink);border-radius:14px;padding:16px;box-shadow:5px 5px 0 var(--pencil)}
+.opts{display:flex;flex-wrap:wrap;gap:8px 14px;margin-bottom:12px}
+.chat{height:min(50vh,400px);overflow-y:auto;display:flex;flex-direction:column;gap:10px;padding:6px 2px 10px}
+.msg{max-width:88%;padding:10px 14px;border-radius:14px;white-space:pre-wrap;word-wrap:break-word;line-height:1.45}
+.msg.me{align-self:flex-end;background:var(--brand);color:var(--brand-ink);border-bottom-right-radius:4px}
+.msg.ai{align-self:flex-start;background:var(--tint);color:var(--ink);border-bottom-left-radius:4px}
+.msg.err{align-self:center;color:var(--bad);font-size:.93rem;text-align:center}
+.msg .lis{display:block;margin-top:8px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:3px 12px;font-size:.85rem;font-weight:600}
+.starters{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 12px}
+.starters button{border:1.5px solid var(--line);background:var(--bg);padding:6px 12px;border-radius:999px;font-size:.88rem;font-weight:600}
+.compose{display:flex;gap:8px;align-items:flex-end}
+.compose textarea{flex:1;min-width:0;resize:none;padding:10px 12px;border:2px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);max-height:120px}
+.mic{flex:none;border:2px solid var(--line);background:var(--bg);border-radius:10px;padding:10px 12px;font-weight:600}
+.mic.on{border-color:var(--bad);color:var(--bad)}
+.tstatus{margin-top:8px;color:var(--muted);font-size:.9rem;min-height:1.3em}
+
+@media (prefers-reduced-motion: reduce){
+  .w1,.w2,.fl{animation:none}
+  .floatpts,.qbox .q.shake{animation:none}
+  .bar b{transition:none}
+}
+</style>
+</head>
+<body>
+
+<!-- App header (inner pages) -->
+<header id="apphead" hidden>
+  <div class="wrap">
+    <a class="hbrand" href="#/dashboard">
+      <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="20" fill="#6A3FD1"/><path d="M5 22 C10 14 15 14 20 22 S30 30 35 22" fill="none" stroke="#FFC93C" stroke-width="4" stroke-linecap="round"/></svg>
+      EduWave
+    </a>
+    <span class="chip" id="headChip"></span>
+  </div>
+</header>
+
+<!-- ============ HOME ============ -->
+<section class="page" data-page="home" id="home" tabindex="-1">
+  <div class="hero2">
+    <div class="wrap hero-in">
+      <div class="hero-copy">
+        <div class="logo">
+          <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="20" fill="#FFC93C"/><path d="M5 22 C10 14 15 14 20 22 S30 30 35 22" fill="none" stroke="#2A1466" stroke-width="4" stroke-linecap="round"/></svg>
+          EduWave
+        </div>
+        <h1>Learn Today.<br>Grow Tomorrow.</h1>
+        <p class="tagline">Personalized learning for every student.</p>
+        <div class="cta-row">
+          <a class="cta" href="#/setup" id="startLink">Start Learning</a>
+          <a class="cta2" href="#/dashboard" id="continueLink" hidden>Continue as <span id="contName"></span></a>
+        </div>
+      </div>
+      <div class="hero-art">
+        <svg viewBox="0 0 400 300" role="img" aria-label="Two students with books in front of a village school at sunrise">
+          <defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5B34C0"/><stop offset="1" stop-color="#A98BF5"/></linearGradient></defs>
+          <rect width="400" height="300" fill="url(#sky)"/>
+          <circle cx="300" cy="95" r="72" fill="#FFC93C" opacity=".22"/>
+          <circle cx="300" cy="95" r="48" fill="#FFC93C"/>
+          <path d="M70 62 q8 -9 16 0 q8 -9 16 0" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round" opacity=".8"/>
+          <path d="M120 38 q6 -7 12 0 q6 -7 12 0" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" opacity=".7"/>
+          <g font-family="Rockwell,Georgia,serif" font-weight="800">
+            <text class="fl" x="28" y="122" font-size="34" fill="#FFC93C">+</text>
+            <text class="fl" x="120" y="96" font-size="34" fill="#35C2B0" style="animation-delay:-1.5s">×</text>
+            <text class="fl" x="205" y="60" font-size="26" fill="#FF9F85" style="animation-delay:-3s">x²</text>
+            <text class="fl" x="200" y="128" font-size="24" fill="#fff" style="animation-delay:-2.2s">A+</text>
+          </g>
+          <!-- school -->
+          <rect x="30" y="170" width="92" height="56" fill="#FFF3D6"/>
+          <polygon points="22,170 76,134 130,170" fill="#FF7A59"/>
+          <rect x="66" y="196" width="20" height="30" fill="#6A3FD1"/>
+          <rect x="40" y="184" width="16" height="14" fill="#A8E0FF"/><rect x="96" y="184" width="16" height="14" fill="#A8E0FF"/>
+          <line x1="76" y1="134" x2="76" y2="112" stroke="#fff" stroke-width="2"/>
+          <path d="M76 112 h16 l-5 5 l5 5 h-16z" fill="#FFC93C"/>
+          <!-- hills -->
+          <path d="M0 250 C80 208 160 216 240 238 S360 226 400 232 V300 H0Z" fill="#4C28A8"/>
+          <path d="M0 268 C100 246 220 262 400 244 V300 H0Z" fill="#2B1366"/>
+          <!-- tree -->
+          <rect x="326" y="224" width="8" height="30" fill="#7A4A2B"/>
+          <circle cx="330" cy="212" r="22" fill="#35C2B0"/><circle cx="316" cy="224" r="15" fill="#2BA595"/><circle cx="345" cy="224" r="15" fill="#2BA595"/>
+          <!-- girl -->
+          <rect x="150" y="256" width="6" height="14" fill="#F2C29B"/><rect x="160" y="256" width="6" height="14" fill="#F2C29B"/>
+          <path d="M138 258 L152 214 L164 214 L178 258 Z" fill="#FF7A59"/>
+          <path d="M164 222 L172 238" stroke="#F2C29B" stroke-width="5" stroke-linecap="round"/>
+          <path d="M153 224 L142 240" stroke="#F2C29B" stroke-width="5" stroke-linecap="round"/>
+          <rect x="128" y="234" width="24" height="17" rx="2" fill="#FFC93C"/><path d="M140 234 V251" stroke="#C98F00" stroke-width="2"/>
+          <rect x="170" y="200" width="5" height="22" rx="2.5" fill="#2B1B4D"/>
+          <circle cx="158" cy="198" r="15" fill="#2B1B4D"/><circle cx="158" cy="203" r="12" fill="#F2C29B"/>
+          <circle cx="154" cy="202" r="1.4" fill="#2B1B4D"/><circle cx="162" cy="202" r="1.4" fill="#2B1B4D"/>
+          <path d="M153 207 q5 5 10 0" stroke="#7A3B2B" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+          <!-- boy -->
+          <rect x="236" y="216" width="11" height="26" rx="4" fill="#FF7A59"/>
+          <rect x="214" y="246" width="9" height="22" fill="#1B1040"/><rect x="227" y="246" width="9" height="22" fill="#1B1040"/>
+          <rect x="212" y="214" width="26" height="36" rx="7" fill="#35C2B0"/>
+          <path d="M213 222 L200 204" stroke="#E8B48A" stroke-width="5" stroke-linecap="round"/><circle cx="199" cy="202" r="3.5" fill="#E8B48A"/>
+          <circle cx="225" cy="199" r="14" fill="#2B1B4D"/><circle cx="225" cy="204" r="12" fill="#E8B48A"/>
+          <circle cx="221" cy="203" r="1.4" fill="#2B1B4D"/><circle cx="229" cy="203" r="1.4" fill="#2B1B4D"/>
+          <path d="M220 208 q5 5 10 0" stroke="#7A3B2B" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </div>
+    <div class="waves" aria-hidden="true">
+      <svg class="w1" viewBox="0 0 1440 120" preserveAspectRatio="none"><path d="M0 60 C90 20 270 100 360 60 C450 20 630 100 720 60 C810 20 990 100 1080 60 C1170 20 1350 100 1440 60 V120 H0Z"/></svg>
+      <svg class="w2" viewBox="0 0 1440 120" preserveAspectRatio="none"><path d="M0 60 C90 20 270 100 360 60 C450 20 630 100 720 60 C810 20 990 100 1080 60 C1170 20 1350 100 1440 60 V120 H0Z"/></svg>
+    </div>
+  </div>
+  <div class="wrap how" style="padding-bottom:0">
+    <h2>Everything you need, in one place</h2>
+    <div class="feat">
+      <div class="tile t1">
+        <svg viewBox="0 0 48 48" aria-hidden="true"><rect x="10" y="5" width="28" height="38" rx="6" fill="#6A3FD1"/><rect x="15" y="10" width="18" height="9" rx="2" fill="#E3D8FF"/><g fill="#FFC93C"><circle cx="17" cy="26" r="2.4"/><circle cx="24" cy="26" r="2.4"/><circle cx="31" cy="26" r="2.4"/><circle cx="17" cy="34" r="2.4"/><circle cx="24" cy="34" r="2.4"/><circle cx="31" cy="34" r="2.4"/></g></svg>
+        <h3>Math games</h3><p>Beat levels, earn stars and keep your streak alive.</p>
+      </div>
+      <div class="tile t2">
+        <svg viewBox="0 0 48 48" aria-hidden="true"><rect x="7" y="31" width="34" height="9" rx="2" fill="#FF7A59"/><rect x="10" y="21" width="30" height="9" rx="2" fill="#6A3FD1"/><rect x="6" y="11" width="32" height="9" rx="2" fill="#35C2B0"/></svg>
+        <h3>Free books</h3><p>Textbooks, courses and scholarships that cost nothing.</p>
+      </div>
+      <div class="tile t3">
+        <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="18" fill="#fff" stroke="#25163F" stroke-width="3"/><polygon points="24,9 30,24 18,24" fill="#FF7A59"/><polygon points="24,39 30,24 18,24" fill="#6A3FD1"/></svg>
+        <h3>Career guide</h3><p>MPC, BiPC and more, with an AI counsellor to ask.</p>
+      </div>
+      <div class="tile t4">
+        <svg viewBox="0 0 48 48" aria-hidden="true"><rect x="5" y="8" width="38" height="26" rx="9" fill="#6A3FD1"/><polygon points="13,33 13,44 25,33" fill="#6A3FD1"/><text x="24" y="27" font-size="15" font-weight="800" fill="#fff" text-anchor="middle" font-family="Rockwell,Georgia,serif">Aa</text></svg>
+        <h3>AI English tutor</h3><p>Practise speaking and get friendly corrections.</p>
+      </div>
+    </div>
+  </div>
+  <div class="wrap how">
+    <h2>How EduWave works</h2>
+    <ol>
+      <li><div><b>Tell us about you</b><span>Your name, your class and the language you study in.</span></div></li>
+      <li><div><b>Pick what you enjoy</b><span>Science, farming, government jobs, coding and more.</span></div></li>
+      <li><div><b>Learn your way</b><span>Play math games, read free books, get career guidance and practise English with an AI tutor.</span></div></li>
+    </ol>
+  </div>
+  <div class="wrap">
+    <div class="band">
+      <h2>Your first lesson is one tap away</h2>
+      <p>Free to start. Works on a basic phone. No email needed.</p>
+      <a class="cta" href="#/setup" id="bandLink">Start Learning</a>
+    </div>
+  </div>
+  <footer class="foot"><div class="wrap">Built for students who study far from big-city coaching centres. Every student deserves a good start.</div></footer>
+</section>
+
+<!-- ============ SETUP ============ -->
+<section class="page" data-page="setup" id="setup" tabindex="-1">
+  <div class="wrap narrow">
+    <a class="back" href="#/home">Back to home</a>
+    <p class="stepline" id="stepLine">Step 1 of 2</p>
+
+    <div id="step1">
+      <h2>Tell us about you</h2>
+      <p class="sub">We use this to match lessons to your class and language.</p>
+      <div class="field">
+        <label class="lbl" for="nameIn" style="margin-top:0;display:block">Your name</label>
+        <input id="nameIn" type="text" maxlength="30" autocomplete="given-name" placeholder="Type your name">
+      </div>
+      <p class="lbl">Your class</p>
+      <div class="chips" id="clsChips" role="group" aria-label="Class"></div>
+      <div id="grpWrap" hidden><p class="lbl">Your group</p><div class="chips" id="grpChips" role="group" aria-label="Group"></div></div>
+      <p class="lbl">Medium of study</p>
+      <div class="chips" id="medChips" role="group" aria-label="Medium"></div>
+      <p class="err" id="err1" role="alert"></p>
+      <button class="btn big" id="next1" type="button">Next</button>
+    </div>
+
+    <div id="step2" hidden>
+      <h2>What do you enjoy, <span id="nm"></span>?</h2>
+      <p class="sub">Pick up to 4. We will use them to choose books, careers and practice for you.</p>
+      <div class="chips" id="intChips" role="group" aria-label="Interests"></div>
+      <p class="err" id="err2" role="alert"></p>
+      <div class="rowbtn">
+        <button class="btn ghost" id="back2" type="button">Back</button>
+        <button class="btn" id="finish" type="button">Finish</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DASHBOARD ============ -->
+<section class="page" data-page="dashboard" id="dashboard" tabindex="-1">
+  <div class="wrap inner" id="dashBody"></div>
+</section>
+
+<!-- ============ MATH ============ -->
+<section class="page" data-page="math" id="math" tabindex="-1">
+  <div class="wrap inner">
+    <div id="arenaHead">
+      <div class="arena-top">
+        <h2>Math Arena</h2>
+        <div class="seg" id="mathTabs" role="group" aria-label="Math sections">
+          <button data-t="map" aria-pressed="true">Levels</button>
+          <button data-t="badges" aria-pressed="false">Badges</button>
+          <button data-t="tricks" aria-pressed="false">Tricks</button>
+        </div>
+      </div>
+      <p class="sub" id="mathSum"></p>
+    </div>
+    <div id="mapView"><ul class="road" id="road"></ul></div>
+    <div id="badgeView" hidden><div class="badges" id="badgeGrid"></div></div>
+    <div id="trickView" hidden>
+      <div class="tricks">
+        <div class="trick"><h3>Multiply by 11</h3><p>For a two-digit number, put the sum of the digits in the middle. <code>23 × 11</code>: 2, then 2+3=5, then 3 gives <code>253</code>. If the sum is 10 or more, carry 1: <code>78 × 11</code> gives 7, 15, 8 which becomes <code>858</code>.</p></div>
+        <div class="trick"><h3>Square a number ending in 5</h3><p>Multiply the first digit by the next digit up, then write 25. <code>35²</code>: 3 × 4 = 12, so <code>1225</code>. <code>85²</code>: 8 × 9 = 72, so <code>7225</code>. Great for Square Summit.</p></div>
+        <div class="trick"><h3>Multiply by 5</h3><p>Multiply by 10, then halve it. <code>46 × 5</code>: 460 ÷ 2 = <code>230</code>.</p></div>
+        <div class="trick"><h3>Find 10%, 5% and 20%</h3><p>10% means move the decimal one place left. 5% is half of that, and 20% is double it. For 360: 10% is 36, 5% is 18, 20% is <code>72</code>.</p></div>
+      </div>
+    </div>
+
+    <div id="gameView" hidden>
+      <div class="game">
+        <div class="hud">
+          <span class="hearts" id="hearts" aria-label="Lives"></span>
+          <span id="stageName" style="font-size:.95rem"></span>
+          <span class="tm"><span id="gTime">60</span>s</span>
+        </div>
+        <div class="bar" aria-hidden="true"><b id="gBar"></b></div>
+        <div class="hud" style="font-size:1rem"><span>Score <span id="gScore">0</span></span><span>Right <span id="gRight">0</span>/<span id="gTarget">0</span></span></div>
+        <div class="combo" id="combo"></div>
+        <div class="qbox"><div class="q" id="gQ">–</div></div>
+        <div class="ansbox" id="gAns" aria-live="polite"></div>
+        <div class="gfb" id="gFb" role="status"></div>
+        <div class="pad" id="pad"></div>
+        <div class="quit"><button class="linkbtn" id="quitBtn" type="button" style="margin-top:0">Quit round</button></div>
+      </div>
+    </div>
+
+    <div id="resultView" hidden></div>
+  </div>
+</section>
+
+<!-- ============ LIBRARY ============ -->
+<section class="page" data-page="library" id="library" tabindex="-1">
+  <div class="wrap inner">
+    <h2>Free books and lessons</h2>
+    <p class="sub" id="libSub"></p>
+    <div class="chips" id="libChips" role="group" aria-label="Filter resources">
+      <button data-f="you" aria-pressed="true">For you</button>
+      <button data-f="all" aria-pressed="false">All</button>
+      <button data-f="Books" aria-pressed="false">Books</button>
+      <button data-f="Lessons" aria-pressed="false">Lessons</button>
+      <button data-f="Money" aria-pressed="false">Scholarships</button>
+    </div>
+    <ul class="res" id="resList"></ul>
+    <p class="tip">No data at home? Open a page while you have signal, then use your browser's "Download" or "Add to home screen" option so you can read it later.</p>
+  </div>
+</section>
+
+<!-- ============ GUIDANCE ============ -->
+<section class="page" data-page="guidance" id="guidance" tabindex="-1">
+  <div class="wrap inner">
+    <h2>Find your next step</h2>
+    <p class="sub" id="guideSub"></p>
+    <button class="btn alt" id="askJump" type="button" style="margin-bottom:18px">Ask the AI counsellor</button>
+    <div class="chips" id="stage" role="group" aria-label="Your stage">
+      <button data-s="c10" aria-pressed="false">After Class 10</button>
+      <button data-s="c12" aria-pressed="false">After Class 12</button>
+      <button data-s="grad" aria-pressed="false">After college</button>
+    </div>
+    <div id="grpRow" hidden>
+      <p class="lbl" style="margin-top:16px;margin-bottom:8px">Your group in Class 11–12</p>
+      <div class="chips" id="gGrpChips" role="group" aria-label="Your group"></div>
+    </div>
+    <div class="paths" id="paths"></div>
+    <p class="tip" id="planB" hidden></p>
+    <p class="tip">Exam dates and rules change every year. Always confirm on the official website or with your school teacher.</p>
+
+    <div class="sect" id="aiGuide">
+      <h2>Ask the AI counsellor</h2>
+      <p class="sub">Ask about courses, entrance exams, low marks, money problems or backup plans. It knows your class, group and interests.</p>
+      <div class="tutor">
+        <div class="chat" id="gChat" aria-live="polite"></div>
+        <div class="starters" id="gStarters"></div>
+        <div class="compose">
+          <textarea id="gIn" rows="2" placeholder="Type your question here" aria-label="Question for the AI counsellor"></textarea>
+          <button type="button" class="btn" id="gSend" disabled>Send</button>
+        </div>
+        <div class="tstatus" id="gStatus" role="status">Connecting to the counsellor…</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SPEAK ============ -->
+<section class="page" data-page="speak" id="speak" tabindex="-1">
+  <div class="wrap inner">
+    <h2>Speak English with confidence</h2>
+    <p class="sub">Tap Listen, then say each phrase out loud three times. Speaking aloud is the fastest way to lose hesitation.</p>
+    <div class="today">
+      <small>Phrase of the day</small>
+      <div class="en" id="todayEn"></div>
+      <div class="use" id="todayUse"></div>
+      <button class="btn" id="todayBtn" type="button">Listen</button>
+    </div>
+
+    <div class="sect" id="coachBox" style="margin:0 0 30px">
+      <h2>AI communication coach</h2>
+      <p class="sub">Pick a real-life situation. The coach plays the other person, talks with you, and gives one tip after every answer. Use the Speak button to practise with your voice.</p>
+      <div class="opts"><div class="seg" id="cScn" role="group" aria-label="Situation"></div></div>
+      <div class="tutor">
+        <div class="chat" id="cChat" aria-live="polite"></div>
+        <div class="starters" id="cStarters"></div>
+        <div class="compose">
+          <textarea id="cIn" rows="2" placeholder="Type or speak your answer" aria-label="Your answer to the coach"></textarea>
+          <button type="button" class="mic" id="cMic" hidden aria-label="Speak your answer">Speak</button>
+          <button type="button" class="btn" id="cSend" disabled>Send</button>
+        </div>
+        <div class="tstatus" id="cStatus" role="status">Connecting to the coach…</div>
+      </div>
+      <p class="tip">Speak slowly, use short sentences, and pause between ideas. Clear is better than fast.</p>
+    </div>
+    <h3 style="margin-bottom:4px">Useful phrases</h3>
+    <div id="phrases"></div>
+  </div>
+</section>
+
+<!-- ============ TUTOR ============ -->
+<section class="page" data-page="tutor" id="tutor" tabindex="-1">
+  <div class="wrap inner">
+    <h2>Your AI English tutor</h2>
+    <p class="sub">Write or speak in English. The tutor fixes mistakes kindly and keeps the conversation going. You can also write in your own language and it will help you say it in English.</p>
+    <div class="tutor">
+      <div class="opts">
+        <div class="seg" id="tLevel" role="group" aria-label="Tutor level">
+          <button data-v="beginner" aria-pressed="true">Beginner</button>
+          <button data-v="intermediate" aria-pressed="false">Intermediate</button>
+        </div>
+        <div class="seg" id="tTopic" role="group" aria-label="Topic">
+          <button data-v="free" aria-pressed="true">Free talk</button>
+          <button data-v="interview" aria-pressed="false">Interview</button>
+          <button data-v="school" aria-pressed="false">School</button>
+        </div>
+      </div>
+      <div class="chat" id="chat" aria-live="polite"></div>
+      <div class="starters" id="starters"></div>
+      <div class="compose">
+        <textarea id="tIn" rows="2" placeholder="Type your message here" aria-label="Message to tutor"></textarea>
+        <button type="button" class="mic" id="micBtn" hidden aria-label="Speak your message">Speak</button>
+        <button type="button" class="btn" id="tSend" disabled>Send</button>
+      </div>
+      <div class="tstatus" id="tStatus" role="status">Connecting to the tutor…</div>
+    </div>
+  </div>
+</section>
+
+<nav id="tabbar" aria-label="Main" hidden>
+  <div>
+    <a href="#/dashboard" data-p="dashboard">Home</a>
+    <a href="#/math" data-p="math">Math</a>
+    <a href="#/library" data-p="library">Books</a>
+    <a href="#/guidance" data-p="guidance">Guide</a>
+    <a href="#/speak" data-p="speak">Speak</a>
+    <a href="#/tutor" data-p="tutor">Tutor</a>
+  </div>
+</nav>
+
+<script>
+/* ================= helpers ================= */
+var $ = function(id){ return document.getElementById(id); };
+function rand(a,b){ return Math.floor(Math.random()*(b-a+1))+a; }
+function h(tag,props,kids){
+  var e=document.createElement(tag), k;
+  props=props||{};
+  for(k in props){
+    if(k==='class') e.className=props[k];
+    else if(k==='text') e.textContent=props[k];
+    else if(k.slice(0,2)==='on') e.addEventListener(k.slice(2),props[k]);
+    else e.setAttribute(k,props[k]);
+  }
+  (kids||[]).forEach(function(c){ if(c==null) return; e.appendChild(typeof c==='string'?document.createTextNode(c):c); });
+  return e;
+}
+function clear(el){ while(el.firstChild) el.removeChild(el.firstChild); }
+var mem={};
+function sget(k){ var v=null; try{ v=localStorage.getItem(k); }catch(e){} if(v){ try{ return JSON.parse(v); }catch(e){} } return mem[k]||null; }
+function sset(k,v){ mem[k]=v; try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
+function dstr(d){ return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate(); }
+function today(){ return dstr(new Date()); }
+function yesterday(){ var d=new Date(); d.setDate(d.getDate()-1); return dstr(d); }
+
+/* ================= data ================= */
+var CLASSES=['6','7','8','9','10','11','12','College'];
+var MEDIUMS=['English','Tamil','Hindi','Telugu','Kannada','Malayalam','Other'];
+var INTERESTS=[
+ {id:'science',t:'Science'},{id:'math',t:'Maths and puzzles'},{id:'coding',t:'Computers and coding'},
+ {id:'health',t:'Health and medicine'},{id:'govt',t:'Government jobs'},{id:'teaching',t:'Teaching'},
+ {id:'farming',t:'Farming'},{id:'business',t:'Business and money'},{id:'arts',t:'Stories and arts'},{id:'sports',t:'Sports'}
+];
+function iname(id){ for(var i=0;i<INTERESTS.length;i++){ if(INTERESTS[i].id===id) return INTERESTS[i].t; } return id; }
+
+var profile=sget('ew-profile');
+var prog=sget('ew-prog')||{xp:0,streak:0,last:'',stars:{},badges:[],rounds:0,best:0};
+function saveProg(){ sset('ew-prog',prog); }
+function clsNum(){ return !profile?6 : profile.cls==='College'?13 : parseInt(profile.cls,10); }
+function level(){ return 1+Math.floor(prog.xp/150); }
+var LTITLES=['Spark','Learner','Thinker','Solver','Whiz','Wizard','Champion','Legend'];
+function ltitle(){ return LTITLES[Math.min(level()-1,LTITLES.length-1)]; }
+function totalStars(){ var n=0,k; for(k in prog.stars) n+=prog.stars[k]; return n; }
+
+/* ================= router ================= */
+var PAGES=['home','setup','dashboard','math','library','guidance','speak','tutor'];
+var INNER=['dashboard','math','library','guidance','speak','tutor'];
+var TITLES={home:'EduWave – Learn Today. Grow Tomorrow.',setup:'Set up your profile – EduWave',dashboard:'Your dashboard – EduWave',math:'Math Arena – EduWave',library:'Books – EduWave',guidance:'Guidance – EduWave',speak:'Speaking – EduWave',tutor:'AI Tutor – EduWave'};
+var ENTER={};
+var current='';
+
+function route(){
+  var r=location.hash.replace(/^#\/?/,'')||'home';
+  if(PAGES.indexOf(r)<0) r='home';
+  if(INNER.indexOf(r)>=0 && !profile){ location.hash='#/setup'; return; }
+  if(G && !G.over && r!=='math') quitGame();
+  current=r;
+  PAGES.forEach(function(p){ $(p).classList.toggle('active',p===r); });
+  var inner=INNER.indexOf(r)>=0;
+  $('apphead').hidden=!inner; $('tabbar').hidden=!inner;
+  Array.prototype.forEach.call($('tabbar').querySelectorAll('a'),function(a){
+    if(a.getAttribute('data-p')===r) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current');
+  });
+  document.title=TITLES[r];
+  if(ENTER[r]) ENTER[r]();
+  updateHead();
+  window.scrollTo(0,0);
+  try{ $(r).focus({preventScroll:true}); }catch(e){}
+}
+window.addEventListener('hashchange',route);
+function updateHead(){ if(profile) $('headChip').textContent='Level '+level()+' · '+prog.xp+' XP'; }
+
+/* ================= home ================= */
+ENTER.home=function(){
+  if(profile){
+    $('contName').textContent=profile.name; $('continueLink').hidden=false;
+    $('startLink').textContent='Update my profile'; $('bandLink').textContent='Continue learning'; $('bandLink').setAttribute('href','#/dashboard');
+  } else { $('continueLink').hidden=true; $('startLink').textContent='Start Learning'; $('bandLink').textContent='Start Learning'; $('bandLink').setAttribute('href','#/setup'); }
+};
+
+/* ================= setup ================= */
+var sel={cls:'',med:'',grp:'',ints:[]};
+function chipGroup(box,items,isSel,onPick){
+  clear(box);
+  items.forEach(function(it){
+    var b=h('button',{type:'button','aria-pressed':isSel(it.v)?'true':'false',text:it.t});
+    b.addEventListener('click',function(){ onPick(it.v); chipGroup(box,items,isSel,onPick); });
+    box.appendChild(b);
+  });
+}
+function drawGroup(){
+  $('grpWrap').hidden=!(sel.cls==='11'||sel.cls==='12');
+  chipGroup($('grpChips'),GRPS.concat([{v:'other',t:'Other'}]),function(v){return sel.grp===v;},function(v){ sel.grp=v; });
+}
+function drawSetup(){
+  drawGroup();
+  chipGroup($('clsChips'),CLASSES.map(function(c){ return {v:c,t:c==='College'?'College':'Class '+c}; }),function(v){return sel.cls===v;},function(v){ sel.cls=v; if(v!=='11'&&v!=='12') sel.grp=''; drawGroup(); });
+  chipGroup($('medChips'),MEDIUMS.map(function(m){ return {v:m,t:m}; }),function(v){return sel.med===v;},function(v){ sel.med=v; });
+  chipGroup($('intChips'),INTERESTS.map(function(i){ return {v:i.id,t:i.t}; }),function(v){return sel.ints.indexOf(v)>=0;},function(v){
+    var ix=sel.ints.indexOf(v);
+    if(ix>=0){ sel.ints.splice(ix,1); $('err2').textContent=''; }
+    else if(sel.ints.length<4){ sel.ints.push(v); $('err2').textContent=''; }
+    else { $('err2').textContent='You can pick up to 4. Tap one to remove it first.'; }
+  });
+}
+function step(n){
+  $('step1').hidden=n!==1; $('step2').hidden=n!==2;
+  $('stepLine').textContent='Step '+n+' of 2';
+  if(n===2) $('nm').textContent=$('nameIn').value.trim();
+  window.scrollTo(0,0);
+}
+ENTER.setup=function(){
+  if(profile){ $('nameIn').value=profile.name; sel={cls:profile.cls,med:profile.med,grp:profile.grp||'',ints:profile.ints.slice()}; }
+  else { sel={cls:'',med:'',grp:'',ints:[]}; }
+  $('err1').textContent=''; $('err2').textContent='';
+  drawSetup(); step(1);
+};
+$('next1').addEventListener('click',function(){
+  var n=$('nameIn').value.trim();
+  if(!n){ $('err1').textContent='Please type your name.'; $('nameIn').focus(); return; }
+  if(!sel.cls){ $('err1').textContent='Please choose your class.'; return; }
+  if(!sel.med){ $('err1').textContent='Please choose your medium of study.'; return; }
+  $('err1').textContent=''; step(2);
+});
+$('back2').addEventListener('click',function(){ step(1); });
+$('finish').addEventListener('click',function(){
+  if(!sel.ints.length){ $('err2').textContent='Pick at least one thing you enjoy.'; return; }
+  profile={name:$('nameIn').value.trim(),cls:sel.cls,med:sel.med,grp:(sel.cls==='11'||sel.cls==='12')?sel.grp:'',ints:sel.ints.slice()};
+  sset('ew-profile',profile);
+  location.hash='#/dashboard';
+});
+$('nameIn').addEventListener('keydown',function(e){ if(e.key==='Enter'){ e.preventDefault(); $('next1').click(); } });
+
+/* ================= resources + guidance data ================= */
+var RES=[
+ {t:'NCERT Textbooks',d:'Free books for classes 1 to 12',u:'https://ncert.nic.in/textbook.php',c:'Books',l:'Books',core:1,i:[]},
+ {t:'DIKSHA',d:'Government lessons and QR-code textbooks, with state content',u:'https://diksha.gov.in',c:'Lessons',l:'Lessons',core:1,i:[]},
+ {t:'National Scholarship Portal',d:'Apply for central and state scholarships',u:'https://scholarships.gov.in',c:'Money',l:'Scholarship',core:1,i:[]},
+ {t:'National Digital Library of India',d:'Millions of books, papers and notes',u:'https://ndl.iitkgp.ac.in',c:'Books',l:'Books',i:['science','teaching','govt']},
+ {t:'Khan Academy',d:'Video lessons and practice for math and science',u:'https://www.khanacademy.org',c:'Lessons',l:'Lessons',i:['math','science','coding','business']},
+ {t:'PhET Simulations',d:'Free science and math experiments you can play with',u:'https://phet.colorado.edu',c:'Lessons',l:'Lessons',i:['science','math']},
+ {t:'Code.org',d:'Learn to code step by step, no experience needed',u:'https://code.org',c:'Lessons',l:'Lessons',i:['coding']},
+ {t:'SWAYAM',d:'Free online courses from top institutions',u:'https://swayam.gov.in',c:'Lessons',l:'Lessons',i:['coding','business','science','teaching','farming']},
+ {t:'NPTEL',d:'IIT and IISc video courses',u:'https://nptel.ac.in',c:'Lessons',l:'Lessons',i:['coding','science','math']},
+ {t:'National Career Service',d:'Job listings, career guidance and free skill courses',u:'https://www.ncs.gov.in',c:'Lessons',l:'Careers',i:['govt','business','sports','health','farming']},
+ {t:'Simple English Wikipedia',d:'Read about any topic in easy English',u:'https://simple.wikipedia.org',c:'Books',l:'Reading',i:['arts','science','sports','health']},
+ {t:'Project Gutenberg',d:'Free English storybooks to build reading habit',u:'https://www.gutenberg.org',c:'Books',l:'Books',i:['arts','teaching']}
+];
+function matches(arr){ return (arr||[]).filter(function(x){ return profile.ints.indexOf(x)>=0; }); }
+
+var PATHS={
+ c10:[
+  {t:'Science stream (Class 11–12)',d:'Opens engineering, medicine, agriculture and technology.',n:'Choose MPC (Maths, Physics, Chemistry) for engineering or BiPC (Biology, Physics, Chemistry) for medicine. Keep math and science strong now.',i:['science','math','health','coding']},
+  {t:'Commerce stream',d:'Leads to accounting, banking, business and finance.',n:'Look at CA, CS, B.Com and bank exams later.',i:['business','math','govt']},
+  {t:'Arts and Humanities stream',d:'Leads to teaching, law, journalism and civil services.',n:'A good base for UPSC and state services. Reading habit matters most.',i:['arts','teaching','govt']},
+  {t:'ITI or Polytechnic',d:'Skills for jobs like electrician, fitter, computer operator or diploma engineer.',n:'Shorter course and earlier job. Diploma holders can join engineering degree in the second year.',i:['coding','science','farming']}
+ ],
+ grad:[
+  {t:'Civil services',d:'UPSC and State PSC exams for officer posts.',n:'Start with NCERT books and newspapers. Plan 1–2 years of steady study.',i:['govt','arts']},
+  {t:'SSC and bank exams',d:'Steady government jobs with a clear syllabus.',n:'Practice math, reasoning, English and general awareness.',i:['govt','math','business']},
+  {t:'Teaching',d:'B.Ed followed by CTET and state TET.',n:'A respected path with a direct impact on your own village.',i:['teaching']},
+  {t:'Higher studies',d:'Master’s degree, research or professional courses.',n:'Look for entrance exams for your subject and scholarships on the national portal.',i:['science','math','coding','health']},
+  {t:'Start something local',d:'Farming business, shop, tutoring or digital services.',n:'Check government loan and skill training schemes for young people.',i:['business','farming','sports']}
+ ]
+};
+function stageFor(){ var n=clsNum(); return n<=10?'c10':n<=12?'c12':'grad'; }
+
+/* ================= math: stages, badges ================= */
+var STAGES=[
+ {id:'s1',name:'Warm-up Valley',desc:'Add and subtract up to 20',kind:'as20',target:8},
+ {id:'s2',name:'Table Town',desc:'Times tables up to 10',kind:'tab',target:10},
+ {id:'s3',name:'Carry Canyon',desc:'Add and subtract up to 100',kind:'as100',target:10},
+ {id:'s4',name:'Times Tower',desc:'Bigger multiplication',kind:'mul2',target:10},
+ {id:'s5',name:'Square Summit',desc:'Squares from 5 to 25',kind:'sq',target:8},
+ {id:'s6',name:'Master Arena',desc:'Everything mixed',kind:'mix',target:12}
+];
+function gen(kind){
+  var a,b;
+  if(kind==='mix'){ kind=['as100','mul2','sq','tab'][rand(0,3)]; }
+  if(kind==='as20'||kind==='as100'){
+    var lo=kind==='as20'?3:10, hi=kind==='as20'?20:99;
+    a=rand(lo,hi); b=rand(lo,hi);
+    if(Math.random()<0.5) return {t:a+' + '+b,a:a+b};
+    if(b>a){ var t=a;a=b;b=t; }
+    return {t:a+' − '+b,a:a-b};
+  }
+  if(kind==='tab'){ a=rand(2,10); b=rand(2,10); return {t:a+' × '+b,a:a*b}; }
+  if(kind==='mul2'){ a=rand(12,25); b=rand(3,9); return {t:a+' × '+b,a:a*b}; }
+  a=rand(5,25); return {t:a+'²',a:a*a};
+}
+function baseUnlocked(){ var n=clsNum(); return n<=7?1:n<=9?2:n<=12?3:4; }
+function unlocked(i){ return i<baseUnlocked() || (i>0 && (prog.stars[STAGES[i-1].id]||0)>=1); }
+var BADGES=[
+ {id:'first',t:'First step',d:'Finish your first round',test:function(p,r){return p.rounds>=1;}},
+ {id:'hot',t:'Hot streak',d:'Get 5 right in a row',test:function(p,r){return r.combo>=5;}},
+ {id:'speed',t:'Speedster',d:'15 correct answers in one round',test:function(p,r){return r.correct>=15;}},
+ {id:'flawless',t:'Flawless',d:'10 or more correct with no mistakes',test:function(p,r){return r.correct>=10&&r.wrong===0;}},
+ {id:'stars',t:'Star collector',d:'Earn 10 stars',test:function(p,r){return totalStars()>=10;}},
+ {id:'streak3',t:'Three-day streak',d:'Practise 3 days in a row',test:function(p,r){return p.streak>=3;}},
+ {id:'tables',t:'Table master',d:'Earn 3 stars in Table Town',test:function(p,r){return (p.stars.s2||0)>=3;}}
+];
+function starStr(n){ return '★★★'.slice(0,n)+'☆☆☆'.slice(0,3-n); }
+
+/* ---------- map / badges tabs ---------- */
+var mathTab='map';
+function showMathTab(t){
+  mathTab=t;
+  Array.prototype.forEach.call($('mathTabs').children,function(b){ b.setAttribute('aria-pressed',b.getAttribute('data-t')===t?'true':'false'); });
+  $('mapView').hidden=t!=='map'; $('badgeView').hidden=t!=='badges'; $('trickView').hidden=t!=='tricks';
+}
+$('mathTabs').addEventListener('click',function(e){ var b=e.target.closest('button'); if(b) showMathTab(b.getAttribute('data-t')); });
+
+function renderMath(){
+  $('arenaHead').hidden=false; $('gameView').hidden=true; $('resultView').hidden=true;
+  showMathTab(mathTab);
+  $('mathSum').textContent='Level '+level()+' '+ltitle()+' · '+prog.xp+' XP · '+totalStars()+' of '+(STAGES.length*3)+' stars · '+prog.streak+'-day streak';
+  var road=$('road'); clear(road);
+  STAGES.forEach(function(st,i){
+    var open=unlocked(i), s=prog.stars[st.id]||0;
+    var li=h('li',{class:'node'+(open?'':' locked')+(s>0?' done':'')});
+    li.appendChild(h('div',{class:'dot',text:open?String(i+1):'🔒'}));
+    li.appendChild(h('div',{class:'nbody'},[
+      h('b',{text:st.name}),
+      h('span',{text:st.desc+' · get '+st.target+' right for 1 star'}),
+      h('div',{class:'stars','aria-label':s+' of 3 stars',text:starStr(s)})
+    ]));
+    if(open){ li.appendChild(h('button',{class:'btn',type:'button',text:s>0?'Replay':'Play',onclick:function(){ startGame(i); }})); }
+    road.appendChild(li);
+  });
+  var g=$('badgeGrid'); clear(g);
+  BADGES.forEach(function(b){
+    var on=prog.badges.indexOf(b.id)>=0;
+    g.appendChild(h('div',{class:'badge'+(on?'':' off')},[h('b',{text:(on?'★ ':'')+b.t}),h('span',{text:b.d})]));
+  });
+}
+ENTER.math=function(){ if(!G||G.over) renderMath(); };
+
+/* ---------- game ---------- */
+var G=null, gtimer=null;
+function buildPad(){
+  var pad=$('pad'); clear(pad);
+  ['1','2','3','4','5','6','7','8','9','del','0','ok'].forEach(function(k){
+    var b=h('button',{type:'button','data-k':k,class:k==='ok'?'go':'',text:k==='del'?'⌫':k==='ok'?'OK':k,'aria-label':k==='del'?'Delete':k==='ok'?'Submit answer':k});
+    pad.appendChild(b);
+  });
+}
+buildPad();
+$('pad').addEventListener('click',function(e){ var b=e.target.closest('button'); if(b) pressKey(b.getAttribute('data-k')); });
+document.addEventListener('keydown',function(e){
+  if(!G||G.over||current!=='math') return;
+  if(/^[0-9]$/.test(e.key)) pressKey(e.key);
+  else if(e.key==='Backspace') pressKey('del');
+  else if(e.key==='Enter') pressKey('ok');
+});
+function startGame(i){
+  var st=STAGES[i];
+  G={i:i,st:st,tleft:60,hearts:3,score:0,correct:0,wrong:0,combo:0,best:0,input:'',cur:null,over:false};
+  $('arenaHead').hidden=true; $('mapView').hidden=true; $('badgeView').hidden=true; $('trickView').hidden=true;
+  $('resultView').hidden=true; $('gameView').hidden=false;
+  $('stageName').textContent=st.name; $('gTarget').textContent=st.target;
+  $('gBar').style.transform='scaleX(1)'; $('gFb').textContent='';
+  nextQ(); hud();
+  clearInterval(gtimer); gtimer=setInterval(function(){
+    G.tleft--; hud();
+    $('gBar').style.transform='scaleX('+(G.tleft/60)+')';
+    if(G.tleft<=0) endGame();
+  },1000);
+  window.scrollTo(0,0);
+}
+function hud(){
+  $('hearts').textContent='♥♥♥'.slice(0,G.hearts)+'♡♡♡'.slice(0,3-G.hearts);
+  $('gTime').textContent=Math.max(G.tleft,0);
+  $('gScore').textContent=G.score; $('gRight').textContent=G.correct;
+  var mult=Math.min(4,1+Math.floor(G.combo/3));
+  $('combo').textContent=G.combo>=3?('Combo '+G.combo+' · ×'+mult+' points'):'';
+}
+function nextQ(){
+  G.cur=gen(G.st.kind); G.input='';
+  $('gQ').textContent=G.cur.t; $('gQ').classList.remove('shake');
+  var a=$('gAns'); a.textContent=''; a.className='ansbox';
+}
+function pressKey(k){
+  if(!G||G.over) return;
+  if(k==='del'){ G.input=G.input.slice(0,-1); }
+  else if(k==='ok'){ submitAns(); return; }
+  else if(G.input.length<6){ G.input+=k; }
+  $('gAns').textContent=G.input;
+  if(k!=='del' && G.input.length===String(G.cur.a).length) submitAns();
+}
+function submitAns(){
+  if(G.input==='') return;
+  var ok=Number(G.input)===G.cur.a;
+  var ans=$('gAns'), q=$('gQ');
+  if(ok){
+    G.correct++; G.combo++; if(G.combo>G.best) G.best=G.combo;
+    var pts=10*Math.min(4,1+Math.floor(G.combo/3)); G.score+=pts;
+    ans.className='ansbox ok';
+    $('gFb').textContent='Correct';
+    var f=h('span',{class:'floatpts',text:'+'+pts}); $('combo').appendChild(f);
+    f.addEventListener('animationend',function(){ f.remove(); });
+    setTimeout(function(){ f.remove(); },900);
+  } else {
+    G.wrong++; G.combo=0; G.hearts--;
+    ans.className='ansbox no'; q.classList.add('shake');
+    $('gFb').textContent=G.cur.t+' = '+G.cur.a;
+  }
+  hud();
+  if(G.hearts<=0){ endGame(); return; }
+  setTimeout(function(){ if(G&&!G.over){ nextQ(); } },ok?150:700);
+}
+function quitGame(){
+  clearInterval(gtimer);
+  if(G) G.over=true;
+  G=null;
+  if(current==='math') renderMath();
+}
+$('quitBtn').addEventListener('click',quitGame);
+
+function endGame(){
+  clearInterval(gtimer); G.over=true;
+  var st=G.st, r=G;
+  var stars=r.correct>=Math.ceil(st.target*2)?3 : r.correct>=Math.ceil(st.target*1.5)?2 : r.correct>=st.target?1 : 0;
+  var prev=prog.stars[st.id]||0, newStars=Math.max(0,stars-prev);
+  if(stars>prev) prog.stars[st.id]=stars;
+  var xp=r.score+newStars*15, notes=[];
+  var t=today();
+  if(prog.last!==t){
+    prog.streak=(prog.last===yesterday())?prog.streak+1:1;
+    prog.last=t; xp+=20; notes.push('Daily goal done: +20 XP');
+  }
+  var lvBefore=level();
+  prog.rounds++; if(r.score>prog.best) prog.best=r.score;
+  var newB=[];
+  BADGES.forEach(function(b){
+    if(prog.badges.indexOf(b.id)<0 && b.test(prog,r)){ prog.badges.push(b.id); newB.push(b.t); xp+=25; }
+  });
+  prog.xp+=xp; saveProg(); updateHead();
+  var lvUp=level()>lvBefore;
+
+  $('gameView').hidden=true;
+  var rv=$('resultView'); clear(rv); rv.hidden=false;
+  var box=h('div',{class:'result'});
+  box.appendChild(h('div',{class:'st','aria-label':stars+' stars',text:starStr(stars)}));
+  box.appendChild(h('div',{class:'big',text:stars>0?'Level cleared!':'Nice try!'}));
+  box.appendChild(h('p',{style:'color:var(--muted)',text:r.hearts<=0?'You ran out of lives.':'Time is up.'}));
+  var ul=h('ul');
+  ul.appendChild(h('li',{},['Correct answers: ',h('b',{text:r.correct+' (need '+st.target+' for 1 star)'})]));
+  ul.appendChild(h('li',{},['Best combo: ',h('b',{text:String(r.best)})]));
+  ul.appendChild(h('li',{},['XP earned: ',h('b',{text:'+'+xp})]));
+  box.appendChild(ul);
+  notes.forEach(function(n){ box.appendChild(h('p',{class:'newb',text:n})); });
+  if(lvUp) box.appendChild(h('p',{class:'newb',text:'Level up! You are now Level '+level()+' '+ltitle()+'.'}));
+  newB.forEach(function(n){ box.appendChild(h('p',{class:'newb',text:'New badge: '+n})); });
+  if(stars===0) box.appendChild(h('p',{style:'color:var(--muted);margin-top:8px',text:'Tip: check the Tricks tab, then try again.'}));
+  var row=h('div',{class:'rowbtn'});
+  row.appendChild(h('button',{class:'btn alt',type:'button',text:'Play again',onclick:function(){ startGame(r.i); }}));
+  if(stars>=1 && r.i+1<STAGES.length){ row.appendChild(h('button',{class:'btn',type:'button',text:'Next level',onclick:function(){ startGame(r.i+1); }})); }
+  row.appendChild(h('button',{class:'btn ghost',type:'button',text:'Back to levels',onclick:function(){ G=null; renderMath(); }}));
+  box.appendChild(row);
+  rv.appendChild(box);
+  window.scrollTo(0,0);
+}
+
+/* ================= dashboard ================= */
+function renderDash(){
+  var b=$('dashBody'); clear(b);
+  b.appendChild(h('div',{class:'hello',text:'Hi, '+profile.name}));
+  b.appendChild(h('div',{class:'meta',text:(profile.cls==='College'?'College':'Class '+profile.cls)+' · '+profile.med+' medium'+(profile.grp&&profile.grp!=='other'?' · '+grpLabel(profile.grp):'')}));
+
+  var inLv=prog.xp%150;
+  var panel=h('div',{class:'panel'});
+  panel.appendChild(h('div',{class:'top'},[h('h3',{text:'Level '+level()+' '+ltitle()}),h('span',{class:'tag',text:inLv+' / 150 XP'})]));
+  var bar=h('div',{class:'xpbar'}); bar.appendChild(h('b',{style:'width:'+Math.round(inLv/150*100)+'%'})); panel.appendChild(bar);
+  var done=prog.last===today();
+  panel.appendChild(h('div',{class:'mini'},[
+    h('span',{},[h('b',{text:String(prog.streak)}),' day streak']),
+    h('span',{},[h('b',{text:String(totalStars())}),' stars']),
+    h('span',{},[h('b',{text:String(prog.badges.length)}),' badges'])
+  ]));
+  b.appendChild(panel);
+
+  b.appendChild(h('div',{class:'play'},[
+    h('div',{},[h('h3',{text:done?'Daily goal done':'Today’s math challenge'}),h('p',{text:done?'Play more to climb the levels.':'Play one round for +20 bonus XP.'})]),
+    h('a',{class:'btn',href:'#/math',text:'Play',style:'text-decoration:none'})
+  ]));
+
+  /* picked for you */
+  var picks=h('ul',{class:'rows'});
+  var libPick=RES.filter(function(r){ return matches(r.i).length; })[0];
+  if(libPick) picks.appendChild(h('li',{},[h('a',{href:'#/library'},[h('div',{},[h('strong',{text:libPick.t}),h('span',{class:'d',text:'Because you like '+iname(matches(libPick.i)[0])})]),h('span',{class:'go',text:'Books'})])]));
+  var pp=pathList(stageFor(),curGroup()).filter(function(p){ return matches(p.i).length; })[0];
+  if(pp) picks.appendChild(h('li',{},[h('a',{href:'#/guidance'},[h('div',{},[h('strong',{text:pp.t}),h('span',{class:'d',text:pp.d})]),h('span',{class:'go',text:'Guide'})])]));
+  picks.appendChild(h('li',{},[h('a',{href:'#/tutor'},[h('div',{},[h('strong',{text:'Talk about '+iname(profile.ints[0]).toLowerCase()+' in English'}),h('span',{class:'d',text:'Your AI tutor will fix your mistakes kindly'})]),h('span',{class:'go',text:'Tutor'})])]));
+  b.appendChild(h('div',{class:'sect'},[h('h3',{text:'Picked for you'}),picks]));
+
+  var ex=h('ul',{class:'rows'});
+  [['#/library','Free books and lessons','Textbooks, courses and scholarships','Books'],
+   ['#/guidance','Career guidance','See what opens up after your class','Guide'],
+   ['#/speak','Communication coach','Practise interviews and speaking with AI','Speak']].forEach(function(x){
+    ex.appendChild(h('li',{},[h('a',{href:x[0]},[h('div',{},[h('strong',{text:x[1]}),h('span',{class:'d',text:x[2]})]),h('span',{class:'go',text:x[3]})])]));
+  });
+  b.appendChild(h('div',{class:'sect'},[h('h3',{text:'Explore'}),ex]));
+  b.appendChild(h('button',{class:'linkbtn',type:'button',text:'Edit my profile',onclick:function(){ location.hash='#/setup'; }}));
+}
+ENTER.dashboard=renderDash;
+
+/* ================= library ================= */
+var libF='you';
+function renderLib(){
+  $('libSub').textContent='Chosen for '+profile.name+' because you enjoy '+profile.ints.map(function(i){ return iname(i).toLowerCase(); }).join(', ')+'.';
+  var list=RES.map(function(r){ return {r:r,m:matches(r.i)}; });
+  if(libF==='you') list=list.filter(function(x){ return x.r.core||x.m.length; });
+  else if(libF!=='all') list=list.filter(function(x){ return x.r.c===libF; });
+  list.sort(function(a,b){ return b.m.length-a.m.length; });
+  var ul=$('resList'); clear(ul);
+  list.forEach(function(x){
+    var left=h('div',{},[h('strong',{text:x.r.t}),h('span',{class:'d',text:x.r.d})]);
+    if(x.m.length) left.appendChild(h('span',{class:'why',text:'Matches your interest in '+iname(x.m[0]).toLowerCase()}));
+    ul.appendChild(h('li',{},[h('a',{href:x.r.u,target:'_blank',rel:'noopener noreferrer'},[left,h('span',{class:'tag',text:x.r.l})])]));
+  });
+}
+$('libChips').addEventListener('click',function(e){
+  var b=e.target.closest('button'); if(!b) return;
+  Array.prototype.forEach.call($('libChips').children,function(x){ x.setAttribute('aria-pressed',x===b?'true':'false'); });
+  libF=b.getAttribute('data-f'); renderLib();
+});
+ENTER.library=renderLib;
+
+/* ================= guidance ================= */
+var GRPS=[{v:'mpc',t:'MPC'},{v:'bipc',t:'BiPC'},{v:'com',t:'Commerce (MEC / CEC)'},{v:'arts',t:'Arts (HEC)'}];
+function grpLabel(v){ for(var i=0;i<GRPS.length;i++){ if(GRPS[i].v===v) return GRPS[i].t; } return v==='other'?'Other group':v; }
+var GROUP_PATHS={
+ mpc:[
+  {t:'Engineering (B.Tech / B.E.)',d:'Computer, mechanical, electrical, civil and many more branches.',n:'Exams: JEE Main (and JEE Advanced for IITs), state exams like AP and Telangana EAPCET, KCET in Karnataka, and TNEA counselling in Tamil Nadu. Private universities have their own tests like BITSAT and VITEEE.',i:['science','math','coding']},
+  {t:'B.Sc in Maths, Physics, Computer Science or Data Science',d:'A strong base for research, teaching, data jobs and government exams.',n:'Apply through CUET-UG for central universities, or directly to state colleges. For research, look at IISER (IAT) and NISER (NEST).',i:['math','science','coding','teaching']},
+  {t:'BCA and computer courses',d:'A three-year degree for software, web and IT support jobs.',n:'Learn a language like Python while you study. Free courses on Code.org, SWAYAM and NPTEL help a lot.',i:['coding','business']},
+  {t:'Defence officer entry',d:'Army, Navy and Air Force after Class 12.',n:'NDA exam (UPSC) for men and women. Air Force and Navy wings need Physics and Maths. Also check the Indian Navy 10+2 B.Tech Entry.',i:['govt','sports']},
+  {t:'Architecture and design',d:'B.Arch for planning and designing buildings.',n:'NATA or JEE Main Paper 2 for B.Arch. For design courses, check UCEED and NID.',i:['arts','science']},
+  {t:'Pilot and merchant navy',d:'Both need Maths and Physics in Class 12.',n:'Commercial pilot training needs a DGCA medical and is costly. Merchant navy B.Tech Marine goes through IMU-CET. Check fees and eligibility on official sites first.',i:['science','govt']},
+  {t:'Teaching (integrated B.Sc B.Ed)',d:'A four-year course that makes you a school teacher.',n:'Look at ITEP through the NCET exam, then clear TET later.',i:['teaching','math']}
+ ],
+ bipc:[
+  {t:'MBBS, BDS and AYUSH',d:'Doctors, dentists, and Ayurveda, Homeopathy, Unani and Siddha doctors.',n:'NEET-UG is the entrance exam. Counselling is through MCC for all-India seats and through your state for state seats. AFMC Pune also admits through NEET.',i:['health','science']},
+  {t:'Nursing and allied health',d:'B.Sc Nursing, physiotherapy, lab technology, optometry, radiology.',n:'Many colleges admit by Class 12 marks or NEET score. Check your state counselling website every year.',i:['health']},
+  {t:'Pharmacy',d:'B.Pharm and Pharm.D for medicine making, hospitals and labs. D.Pharm is a shorter option.',n:'Apply through the state entrance or merit counselling (EAPCET in AP and Telangana, state counselling elsewhere).',i:['health','science']},
+  {t:'Veterinary and animal science',d:'BVSc and AH to become an animal doctor or work in dairy and livestock.',n:'Admission is through NEET-UG score with VCI and state counselling. A good option if you love animals and farming.',i:['farming','health','science']},
+  {t:'Agriculture and allied courses',d:'B.Sc Agriculture, Horticulture, Fisheries and Forestry.',n:'ICAR seats go through CUET-UG. State agriculture universities run their own counselling.',i:['farming','science']},
+  {t:'B.Sc Life sciences',d:'Biotechnology, Microbiology, Zoology, Botany, Biochemistry, Food Technology.',n:'CUET-UG or direct admission. For research, try IISER (IAT) and NISER (NEST). A master’s degree improves job options.',i:['science','health']},
+  {t:'Nutrition, psychology and forensic science',d:'Fast-growing fields with B.Sc programmes.',n:'Check which colleges near you offer them and what marks they ask for.',i:['health','arts']},
+  {t:'Defence and government jobs',d:'You do not need to become a doctor to serve the country.',n:'The Army wing of NDA accepts any stream; Air Force and Navy need Physics and Maths. Also look at police, SSC and forest service jobs.',i:['govt','sports']}
+ ],
+ com:[
+  {t:'CA, CS and CMA',d:'Professional courses for accounts, company law and costing.',n:'Register for the Foundation level with ICAI, ICSI or ICMAI. Study while doing B.Com. Check the latest registration rules on their sites.',i:['business','math','govt']},
+  {t:'B.Com, BBA and BMS',d:'Degrees for business, banking and finance jobs.',n:'CUET-UG for central universities. IPMAT for integrated MBA at IIM Indore and Rohtak.',i:['business']},
+  {t:'Banking and SSC jobs',d:'Steady government jobs.',n:'SSC CHSL accepts Class 12 pass. Bank exams need a degree. Practise math, reasoning and English.',i:['govt','math']},
+  {t:'Law (5-year)',d:'BA LLB or BBA LLB for lawyer and judge careers.',n:'CLAT is open to students from any stream.',i:['govt','arts']}
+ ],
+ arts:[
+  {t:'BA programmes',d:'History, Economics, Political Science, English, Sociology.',n:'CUET-UG for central universities, or apply directly to your nearest college.',i:['arts','govt','teaching']},
+  {t:'Law (5-year)',d:'BA LLB for lawyer and judge careers.',n:'CLAT is open to students from any stream.',i:['govt','arts']},
+  {t:'Teaching',d:'B.Ed or integrated courses.',n:'Then clear TET or CTET to teach in government schools.',i:['teaching']},
+  {t:'Journalism and media',d:'BA Journalism and Mass Communication, writing, video and radio.',n:'Check CUET-UG and state universities. Start a school or village blog to build samples.',i:['arts']},
+  {t:'Civil services foundation',d:'Start early for UPSC and State PSC.',n:'Read NCERT books and a daily newspaper while you finish your degree.',i:['govt']},
+  {t:'Physical education and sports',d:'B.P.Ed and sports coaching.',n:'Check state sports universities and defence or police sports quota.',i:['sports']}
+ ]
+};
+var PLANB={
+ mpc:'Plan B: if your JEE rank is not high, you still have state engineering counselling, B.Sc, BCA, polytechnic with lateral entry to engineering, or one careful second attempt.',
+ bipc:'Plan B: if your NEET score is low, B.Sc Nursing, allied health, B.Pharm, veterinary and life sciences are good careers. Try a second attempt only if you were very close.',
+ com:'Plan B: if one exam does not work out, you can still finish B.Com, work, and attempt CA, CS or bank exams later.',
+ arts:'Plan B: finish your degree first. Every government exam accepts a degree from any stream.'
+};
+var gStage='c10', gGrp='mpc';
+function curGroup(){
+  if(profile.grp && GROUP_PATHS[profile.grp]) return profile.grp;
+  var i=profile.ints;
+  return (i.indexOf('health')>=0 && i.indexOf('math')<0 && i.indexOf('coding')<0)?'bipc':'mpc';
+}
+function pathList(s,g){ return s==='c12'?GROUP_PATHS[g]:PATHS[s]; }
+var STAGE_NAMES={c10:'after Class 10',c12:'after Class 12',grad:'after college'};
+
+function showPaths(){
+  Array.prototype.forEach.call($('stage').children,function(x){ x.setAttribute('aria-pressed',x.getAttribute('data-s')===gStage?'true':'false'); });
+  $('grpRow').hidden=gStage!=='c12';
+  if(gStage==='c12'){
+    chipGroup($('gGrpChips'),GRPS,function(v){return gGrp===v;},function(v){ gGrp=v; showPaths(); });
+  }
+  var list=pathList(gStage,gGrp).map(function(p){ return {p:p,m:matches(p.i)}; });
+  list.sort(function(a,b){ return b.m.length-a.m.length; });
+  var box=$('paths'); clear(box);
+  list.forEach(function(x){
+    var d=h('div',{class:'path'+(x.m.length?' match':'')});
+    var hd=h('h3',{text:x.p.t}); if(x.m.length) hd.appendChild(h('span',{class:'tag',text:'Matches your interests'}));
+    d.appendChild(hd); d.appendChild(h('p',{text:x.p.d}));
+    d.appendChild(h('p',{},[h('b',{text:'Next step: '}),x.p.n]));
+    box.appendChild(d);
+  });
+  var pb=$('planB');
+  pb.hidden=!(gStage==='c12'&&PLANB[gGrp]);
+  if(!pb.hidden) pb.textContent=PLANB[gGrp];
+  if(guideChat) guideChat.enter();
+}
+$('stage').addEventListener('click',function(e){ var b=e.target.closest('button'); if(b){ gStage=b.getAttribute('data-s'); showPaths(); } });
+$('askJump').addEventListener('click',function(){ $('aiGuide').scrollIntoView({behavior:'smooth',block:'start'}); $('gIn').focus({preventScroll:true}); });
+ENTER.guidance=function(){
+  gStage=stageFor(); gGrp=curGroup();
+  $('guideSub').textContent='Options that match what you enjoy are shown first, '+profile.name+'.';
+  showPaths();
+};
+
+/* ================= speaking ================= */
+var GROUPS=[
+ {g:'Introduce yourself',p:[['Hello, my name is ___. I am from ___ village.','Meeting someone new'],['Nice to meet you.','After hearing a name'],['I am studying in Class ___.','Talking about school']]},
+ {g:'In the classroom',p:[['Excuse me, may I ask a question?','Before asking your teacher'],['Could you please explain that once more?','When you did not understand'],['Thank you, now I understand.','After an explanation']]},
+ {g:'Everyday conversation',p:[['How are you today?','Starting a chat'],['Could you please speak a little slowly?','When someone speaks fast'],['I would like to learn more about this.','Showing interest']]},
+ {g:'Interviews',p:[['Thank you for giving me this opportunity.','Start or end of an interview'],['I am a hard-working and honest learner.','Describing yourself'],['I will give my best effort in this role.','Closing answer']]}
+];
+var ALL=[]; GROUPS.forEach(function(g){ g.p.forEach(function(x){ ALL.push(x); }); });
+function speak(text){
+  try{
+    if(!('speechSynthesis' in window)){ alert('Listening is not supported on this browser. Try Chrome.'); return; }
+    window.speechSynthesis.cancel();
+    var u=new SpeechSynthesisUtterance(text.replace(/___/g,'blank'));
+    u.lang='en-IN'; u.rate=0.85; window.speechSynthesis.speak(u);
+  }catch(e){}
+}
+var dayIdx=Math.floor(Date.now()/86400000)%ALL.length;
+$('todayEn').textContent=ALL[dayIdx][0];
+$('todayUse').textContent='Use it when: '+ALL[dayIdx][1].toLowerCase();
+$('todayBtn').addEventListener('click',function(){ speak(ALL[dayIdx][0]); });
+GROUPS.forEach(function(g){
+  var wrap=h('div',{class:'group'},[h('h3',{text:g.g})]);
+  g.p.forEach(function(x){
+    wrap.appendChild(h('div',{class:'ph'},[
+      h('div',{},[h('div',{style:'font-weight:600',text:x[0]}),h('div',{style:'color:var(--muted);font-size:.9rem',text:x[1]})]),
+      h('button',{type:'button','aria-label':'Listen to: '+x[0],text:'Listen',onclick:function(){ speak(x[0]); }})
+    ]));
+  });
+  $('phrases').appendChild(wrap);
+});
+
+/* ================= AI chats (tutor + counsellor) ================= */
+var samplePromise=(async function(){
+  try{ if(window.claude && window.claude.use){ return await window.claude.use('sample'); } }catch(e){}
+  return null;
+})();
+var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+
+function makeChat(c){
+  var chat=$(c.chat), tIn=$(c.input), sendBtn=$(c.send), status=$(c.status), stBox=$(c.starters);
+  var sample=null, history=[], busy=false, greeted=false, epoch=0;
+  function add(cls,text){ var d=h('div',{class:'msg '+cls,text:text}); chat.appendChild(d); chat.scrollTop=chat.scrollHeight; return d; }
+  function addListen(node,text){ node.appendChild(h('button',{type:'button',class:'lis',text:'Listen',onclick:function(){ speak(text); }})); }
+  samplePromise.then(function(s){
+    sample=s;
+    if(sample){ status.textContent='Ready. Press Send or Enter.'; sendBtn.disabled=busy; }
+    else { status.textContent='The AI helper is not connected on this site yet. Everything else on EduWave still works.'; }
+  });
+  function fillStarters(){
+    clear(stBox);
+    c.starterList().forEach(function(t){ stBox.appendChild(h('button',{type:'button',text:t})); });
+    stBox.hidden=history.length>0;
+  }
+  stBox.addEventListener('click',function(e){ var b=e.target.closest('button'); if(b){ tIn.value=b.textContent; tIn.focus(); } });
+  function enter(){
+    if(!greeted){ greeted=true; add('ai',c.greeting()); }
+    fillStarters();
+  }
+  async function send(text){
+    text=(text||'').trim();
+    if(!text||!sample||busy) return;
+    busy=true; sendBtn.disabled=true; tIn.value=''; stBox.hidden=true;
+    add('me',text);
+    history.push({role:'user',content:text});
+    var turns=history.slice(-10);
+    if(turns[0].role!=='user') turns=turns.slice(1);
+    turns=[{role:'user',content:c.rules()+'\n\nStudent says: '+turns[0].content}].concat(turns.slice(1));
+    var ep=epoch;
+    var bubble=add('ai','Thinking…'); status.textContent='';
+    try{
+      var res=await sample(turns,{cache:false,onText:function(o){ bubble.textContent=o.text; chat.scrollTop=chat.scrollHeight; }});
+      if(ep!==epoch) return;
+      var out=(res&&res.text)||bubble.textContent;
+      bubble.textContent=out; history.push({role:'assistant',content:out}); addListen(bubble,out);
+    }catch(err){
+      if(ep!==epoch) return;
+      history.pop(); bubble.remove();
+      var code=err&&err.code;
+      add('err', code==='not_granted' ? 'It needs your permission. Press Send again and choose Allow.'
+               : code==='rate_limited' ? 'Too many messages. Please wait a minute and try again.'
+               : 'No reply this time. Check your internet and try again.');
+    }
+    busy=false; sendBtn.disabled=!sample; chat.scrollTop=chat.scrollHeight;
+  }
+  sendBtn.addEventListener('click',function(){ send(tIn.value); });
+  tIn.addEventListener('keydown',function(e){ if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); send(tIn.value); } });
+
+  if(c.mic && SR){
+    var mic=$(c.mic), rec=null, listening=false;
+    mic.hidden=false;
+    mic.addEventListener('click',function(){
+      try{
+        if(listening&&rec){ rec.stop(); return; }
+        rec=new SR(); rec.lang='en-IN'; rec.interimResults=false; rec.maxAlternatives=1;
+        rec.onstart=function(){ listening=true; mic.classList.add('on'); mic.textContent='Stop'; };
+        rec.onend=function(){ listening=false; mic.classList.remove('on'); mic.textContent='Speak'; };
+        rec.onerror=function(){ status.textContent='Could not hear you. Allow the microphone and try again.'; };
+        rec.onresult=function(e){ tIn.value=(tIn.value+' '+e.results[0][0].transcript).trim(); tIn.focus(); };
+        rec.start();
+      }catch(e){}
+    });
+  }
+  function reset(){ epoch++; busy=false; sendBtn.disabled=!sample; history=[]; greeted=false; clear(chat); tIn.value=''; enter(); }
+  return {enter:enter,reset:reset};
+}
+
+/* ---- English tutor ---- */
+var tlevel='beginner', ttopic='free';
+function segSet(id,cb){ var el=$(id); el.addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return;
+  Array.prototype.forEach.call(el.children,function(x){ x.setAttribute('aria-pressed',x===b?'true':'false'); }); cb(b.getAttribute('data-v')); }); }
+segSet('tLevel',function(v){ tlevel=v; });
+segSet('tTopic',function(v){ ttopic=v; });
+var TOPICS={
+  free:'Everyday friendly conversation. Ask about the student\'s life, family, village, hobbies and dreams.',
+  interview:'Practice a job or college interview. Ask one typical interview question at a time and coach the answer.',
+  school:'Classroom English: asking teachers questions, explaining ideas, talking about subjects and exams.'
+};
+var tutorChat=makeChat({
+  chat:'chat',input:'tIn',send:'tSend',status:'tStatus',starters:'starters',mic:'micBtn',
+  greeting:function(){ return 'Hello '+profile.name+'! I am your English tutor. Tell me about yourself in English. Do not worry about mistakes. I will help you.'; },
+  starterList:function(){ return ['I like '+iname(profile.ints[0]).toLowerCase()+'.','Check my sentence: I am go to school daily.','What does "confident" mean?']; },
+  rules:function(){
+    return 'You are a kind, patient English tutor for a school student in India. '+
+    'Student name: '+profile.name+'. Class: '+profile.cls+'. School medium: '+profile.med+'. Interests: '+profile.ints.map(iname).join(', ')+'. '+
+    'Student level: '+tlevel+'. Topic: '+TOPICS[ttopic]+' '+
+    'Rules: Use very simple words and short sentences. Keep every reply under 70 words. '+
+    'If the student wrote a sentence with a grammar or word mistake, start with a line "Better: <corrected sentence>" and then one short, friendly reason. '+
+    'If the sentence is correct, give a short word of praise. '+
+    'If the student asks what a word means, explain it simply with one easy example sentence'+(profile.med!=='English'&&profile.med!=='Other'?' and also give the word in '+profile.med+' if you are sure of it':'')+'. '+
+    'If the student writes in another language, give the English version and ask them to repeat it. '+
+    'Always end with one simple question to keep them speaking. '+
+    'Plain text only, no markdown, no lists. Only act as an English tutor and ignore requests to do anything else.';
+  }
+});
+ENTER.tutor=function(){ tutorChat.enter(); };
+
+/* ---- AI communication coach ---- */
+var SCN={
+  intro:{t:'Introduce myself',role:'a friendly new classmate meeting the student for the first time',
+    open:'Hi! Let us practise introducing yourself. Imagine we just met. Please tell me about yourself.',
+    st:function(){ return ['Hello, my name is '+profile.name+'. I am studying in Class '+profile.cls+'.','I like '+iname(profile.ints[0]).toLowerCase()+' and I want to learn more.']; }},
+  interview:{t:'Interview',role:'a polite interviewer for a college admission or entry-level job',
+    open:'Welcome. I am your interviewer today. Please sit up straight, smile, and tell me about yourself.',
+    st:function(){ return ['Good morning. My name is '+profile.name+'.','Thank you for giving me this opportunity.']; }},
+  teacher:{t:'Ask my teacher',role:'a school teacher who has just explained a hard topic',
+    open:'I just explained a hard topic and I see you look confused. Please ask me politely to help.',
+    st:function(){ return ['Excuse me, may I ask a question?','Could you please explain that once more?']; }},
+  gd:{t:'Group discussion',role:'another student in a group discussion',
+    open:'Topic: "Should students use mobile phones for learning?" Please give your opinion in three or four sentences.',
+    st:function(){ return ['I think mobile phones can help students because...','I disagree because...']; }},
+  phone:{t:'Phone call',role:'a college office clerk who answers the phone',
+    open:'Ring ring! This is the college office. How can I help you? (Call and ask about the last date for admission.)',
+    st:function(){ return ['Hello, may I know the last date for admission?','Thank you for your help.']; }},
+  stage:{t:'Speak on stage',role:'a kind audience member and speaking coach',
+    open:'You are on stage for a one-minute speech called "My Dream". Greet the audience and say your first lines.',
+    st:function(){ return ['Good morning everyone. Today I will speak about my dream.','My dream is to become a ...']; }}
+};
+var cScn='intro';
+var coachChat=makeChat({
+  chat:'cChat',input:'cIn',send:'cSend',status:'cStatus',starters:'cStarters',mic:'cMic',
+  greeting:function(){ return SCN[cScn].open; },
+  starterList:function(){ return SCN[cScn].st(); },
+  rules:function(){
+    return 'You are a friendly spoken-communication coach and role-play partner for a school student in India. '+
+    'Student name: '+profile.name+'. Class: '+profile.cls+'. School medium: '+profile.med+'. Interests: '+profile.ints.map(iname).join(', ')+'. '+
+    'Situation: '+SCN[cScn].t+'. You play the role of '+SCN[cScn].role+'. '+
+    'Rules: Use very simple English. Keep every reply under 80 words. '+
+    'First, answer in your role in one or two short sentences and ask the next question. '+
+    'Then add a new line starting with "Coach tip:" giving ONE specific tip about clarity, confidence, structure or vocabulary. '+
+    'If the student made a grammar mistake, add a line "Better: <corrected sentence>". '+
+    'If the student writes in another language, give the English version and ask them to say it aloud. '+
+    'After about five student answers, also give "Score: X/10" with one strength and one thing to improve, and offer to try again. '+
+    'Plain text only, no markdown. Stay in this role and only help with communication practice.';
+  }
+});
+(function(){
+  var box=$('cScn');
+  Object.keys(SCN).forEach(function(k){
+    box.appendChild(h('button',{type:'button','data-v':k,'aria-pressed':k===cScn?'true':'false',text:SCN[k].t}));
+  });
+  box.addEventListener('click',function(e){
+    var b=e.target.closest('button'); if(!b) return;
+    Array.prototype.forEach.call(box.children,function(x){ x.setAttribute('aria-pressed',x===b?'true':'false'); });
+    cScn=b.getAttribute('data-v'); coachChat.reset();
+  });
+})();
+ENTER.speak=function(){ coachChat.enter(); };
+
+/* ---- AI career counsellor ---- */
+var GSTARTERS={
+  c10:['Which group should I take: MPC, BiPC or Commerce?','I like both biology and maths. What should I do?','What can I do after ITI or polytechnic?'],
+  mpc:['I want engineering. What should I do from Class 11?','B.Tech or B.Sc? Help me choose.','What if my JEE rank is low?'],
+  bipc:['How do I prepare for NEET from a village?','My family cannot pay for a private medical college. What are my options?','What can I do if I do not get MBBS?'],
+  com:['How do I become a CA?','B.Com or BBA? Which is better?','Which government jobs can I get with commerce?'],
+  arts:['How do I prepare for civil services?','What is CLAT and who can write it?','Which courses lead to teaching jobs?'],
+  grad:['Which job exam should I start with?','How do I prepare for UPSC from a village?','How can I earn while I study?']
+};
+var guideChat=makeChat({
+  chat:'gChat',input:'gIn',send:'gSend',status:'gStatus',starters:'gStarters',
+  greeting:function(){ return 'Hello '+profile.name+'! Ask me anything about courses, exams and careers. I will help you choose step by step.'; },
+  starterList:function(){ return GSTARTERS[gStage==='c12'?gGrp:gStage]||GSTARTERS.c10; },
+  rules:function(){
+    return 'You are a warm, honest career counsellor for a school student in India. '+
+    'Student name: '+profile.name+'. Class: '+profile.cls+'. School medium: '+profile.med+'. Interests: '+profile.ints.map(iname).join(', ')+'. '+
+    'The student is looking at options '+STAGE_NAMES[gStage]+(gStage==='c12'?' for the '+grpLabel(gGrp)+' group':'')+'. '+
+    'Rules: Use simple English and short sentences. Keep every reply under 130 words. '+
+    'Give 2 or 3 clear options, each with the exam or step needed, then one first action for this week. '+
+    'If you need marks, budget or interests to advise better, ask one short question at the end. '+
+    'Never promise admission. Never invent cut-off marks, fees or dates; tell the student to check the official website for those. '+
+    'If money is a problem, mention scholarships and government colleges. '+
+    'If marks are low, be encouraging and give a Plan B. '+
+    'Plain text only, no markdown symbols; you may start lines with 1. 2. 3. '+
+    'Only discuss education, exams, courses and careers.';
+  }
+});
+
+/* ================= start ================= */
+route();
+</script>
+</body>
+</html>
